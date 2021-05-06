@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Shopping list</string>
+
+    <!--    Login activity  -->
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="log_in">Log in</string>
+    // Kotlin
+        <string name="enterEmail">Enter e-mail</string>
+        <string name="enterPassword">Enter password</string>
+        <string name="validEmailPassword">wrong login or password</string>
+        <string name="successfulAuth">Successful authorization</string>
+
 </resources>

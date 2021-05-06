@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shopping list</string>
+
+    <!--    Login activity  -->
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="log_in">Войти</string>
+    // Kotlin
+        <string name="enterEmail">Введите e-mail</string>
+        <string name="enterPassword">Введите пароль</string>
+        <string name="validEmailPassword">Неверный логин или пароль</string>
+        <string name="successfulAuth">Успешная авторизация</string>
+
+
+</resources>
