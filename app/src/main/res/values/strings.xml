@@ -11,4 +11,19 @@
         <string name="validEmailPassword">wrong login or password</string>
         <string name="successfulAuth">Successful authorization</string>
 
+    <!--    Main activity   -->
+    <string name="importantBuy">Importance of buying</string>
+    <string name="send">Send</string>
+    <string name="writeShopList">Please write a shopping list</string>
+    <string name="update">Update</string>
+    <string name="updated">Updated</string>
+    //kotlin
+    <string name="succss_saved">Shopping list saved successfully</string>
+
+
+    <!--    Adapter     -->
+    <string name="No">No</string>
+    <string name="enterShopList">Please enter a shopping list</string>
+    <string name="Update_shopping_list">Update Shopping list</string>
+
 </resources>

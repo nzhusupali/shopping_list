@@ -12,5 +12,21 @@
         <string name="validEmailPassword">Неверный логин или пароль</string>
         <string name="successfulAuth">Успешная авторизация</string>
 
+    <!--    Main Activity   -->
+    <string name="importantBuy">Важность покупки</string>
+    <string name="send">Отправить</string>
+    <string name="writeShopList">Напишите, пожалуйста, список покупок</string>
+    <string name="update">Обновить</string>
+    <string name="updated">Список обновлён</string>
+    //kotlin
+    <string name="succss_saved">Список покупок успешно сохранен</string>
+
+    <!--    Adapter     -->
+    //Kotlin
+    <string name="No">Нет</string>
+    <string name="enterShopList">Пожалуйста, напишите список покупок</string>
+    <string name="Update_shopping_list">Обновить список покупок</string>
+
+
 
 </resources>
