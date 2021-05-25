@@ -19,6 +19,8 @@
     <string name="updated">Updated</string>
     //kotlin
     <string name="succss_saved">Shopping list saved successfully</string>
+    <string name="dontForget">Dont forget to check the list of products for today</string>
+
 
 
     <!--    Adapter     -->

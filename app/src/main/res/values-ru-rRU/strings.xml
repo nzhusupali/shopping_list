@@ -20,6 +20,8 @@
     <string name="updated">Список обновлён</string>
     //kotlin
     <string name="succss_saved">Список покупок успешно сохранен</string>
+    <string name="dontForget">Не забудьте посмотреть список продуктов на сегодня</string>
+
 
     <!--    Adapter     -->
     //Kotlin

@@ -1,10 +1,16 @@
 package nzhusupali.project.shoppinglist
 
+import android.app.*
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import com.google.firebase.database.*
 import nzhusupali.project.shoppinglist.databinding.ActivityMainBinding
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -12,7 +18,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var ET_ShopList: EditText
     private lateinit var ratingBar: RatingBar
     private lateinit var buttonSend: Button
-    private lateinit var listView : ListView
+    private lateinit var listView: ListView
+    private val CHANNEL_ID_ANDROID = "test"
+    private val CHANNEL_NAME = "test 2"
+
 
     private lateinit var shoppingList: MutableList<ShopList>
     private lateinit var ref: DatabaseReference
@@ -21,6 +30,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(_binding.root)
+        scheduleAlarm()
+        scheduleAlarm2()
+
 
         shoppingList = mutableListOf()
         ref = FirebaseDatabase.getInstance().getReference("Shop list")
@@ -29,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         ratingBar = _binding.ratingBar
         buttonSend = _binding.BTNSend
         listView = _binding.listView
+        val notificationButton = _binding.button
 
         buttonSend.setOnClickListener {
             shopListSend()
@@ -39,17 +52,92 @@ class MainActivity : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
+                    shoppingList.clear()
                     for (h in snapshot.children) {
                         val shopPingList = h.getValue(ShopList::class.java)
                         shoppingList.add(shopPingList!!)
                     }
-                    val adapter = ShopListAdapter(this@MainActivity, R.layout.shopping_list,shoppingList )
+                    val adapter =
+                        ShopListAdapter(this@MainActivity, R.layout.shopping_list, shoppingList)
                     listView.adapter = adapter
 
                 }
             }
 
         })
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        notificationButton.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                val imp = NotificationManager.IMPORTANCE_HIGH
+                val mNotificationChannel =
+                    NotificationChannel(CHANNEL_ID_ANDROID, CHANNEL_NAME, imp)
+                val notificationBuilder: Notification.Builder =
+                    Notification.Builder(this, CHANNEL_ID_ANDROID)
+                        .setSmallIcon(R.drawable.shopping96)
+                        .setContentTitle("Shopping List")
+                        .setContentText("Не забудьте посмотреть список продуктов на сегодня")
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true)
+                Notification.DEFAULT_ALL
+                Notification.DEFAULT_VIBRATE
+                val notificationManager: NotificationManager =
+                    this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.createNotificationChannel(mNotificationChannel)
+                notificationManager.notify(0, notificationBuilder.build())
+            } else {
+                val notificationBuild2: NotificationCompat.Builder =
+                    NotificationCompat.Builder(this)
+                        .setContentTitle("Shopping List")
+                        .setContentText("Не забудьте посмотреть список продуктов на сегодня")
+                val notificationManager: NotificationManager =
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.notify(0, notificationBuild2.build())
+            }
+        }
+
+    }
+
+    //    Здесь устанавливаем время уведомления. Уведомление настраивается в MyAlarmReceiver
+    private fun scheduleAlarm() {
+        val id = 1
+//        val time = GregorianCalendar().timeInMillis
+        val intentAlarm = Intent(this, MyAlarmReceiver::class.java)
+        val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = System.currentTimeMillis()
+        calendar.set(Calendar.HOUR_OF_DAY, 19)
+        calendar.set(Calendar.MINUTE, 0)
+
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            PendingIntent.getBroadcast(this, id, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT)
+        )
+
+    }
+
+    private fun scheduleAlarm2() {
+        val id = 2
+        val intentAlarm = Intent(this,MyAlarmReceiver::class.java)
+        val alarmManager : AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = System.currentTimeMillis()
+        calendar.set(Calendar.HOUR_OF_DAY,18)
+        calendar.set(Calendar.MINUTE, 0)
+
+        alarmManager.set(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            PendingIntent.getBroadcast(this,id,intentAlarm,PendingIntent.FLAG_UPDATE_CURRENT)
+        )
     }
 
     private fun shopListSend() {
@@ -68,7 +156,7 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
-
-
     }
+
+
 }
