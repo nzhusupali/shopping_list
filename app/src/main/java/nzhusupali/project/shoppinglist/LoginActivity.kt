@@ -11,6 +11,7 @@ import nzhusupali.project.shoppinglist.databinding.LoginActivityBinding
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var _binding: LoginActivityBinding
+    private val mAuth: FirebaseAuth? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = LoginActivityBinding.inflate(layoutInflater)

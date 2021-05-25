@@ -27,5 +27,7 @@
     <string name="No">No</string>
     <string name="enterShopList">Please enter a shopping list</string>
     <string name="Update_shopping_list">Update Shopping list</string>
+    <string name="delete">delete</string>
+    <string name="deleted">Deleted</string>
 
 </resources>

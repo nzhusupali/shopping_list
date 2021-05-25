@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import nzhusupali.project.shoppinglist.databinding.ActivityMainBinding
 import java.util.*
@@ -41,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         ratingBar = _binding.ratingBar
         buttonSend = _binding.BTNSend
         listView = _binding.listView
-        val notificationButton = _binding.button
 
         buttonSend.setOnClickListener {
             shopListSend()
@@ -63,44 +63,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
-
         })
-
-        val intent = Intent(this, MainActivity::class.java)
-        intent.apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-        notificationButton.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-                val imp = NotificationManager.IMPORTANCE_HIGH
-                val mNotificationChannel =
-                    NotificationChannel(CHANNEL_ID_ANDROID, CHANNEL_NAME, imp)
-                val notificationBuilder: Notification.Builder =
-                    Notification.Builder(this, CHANNEL_ID_ANDROID)
-                        .setSmallIcon(R.drawable.shopping96)
-                        .setContentTitle("Shopping List")
-                        .setContentText("Не забудьте посмотреть список продуктов на сегодня")
-                        .setContentIntent(pendingIntent)
-                        .setAutoCancel(true)
-                Notification.DEFAULT_ALL
-                Notification.DEFAULT_VIBRATE
-                val notificationManager: NotificationManager =
-                    this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notificationManager.createNotificationChannel(mNotificationChannel)
-                notificationManager.notify(0, notificationBuilder.build())
-            } else {
-                val notificationBuild2: NotificationCompat.Builder =
-                    NotificationCompat.Builder(this)
-                        .setContentTitle("Shopping List")
-                        .setContentText("Не забудьте посмотреть список продуктов на сегодня")
-                val notificationManager: NotificationManager =
-                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notificationManager.notify(0, notificationBuild2.build())
-            }
-        }
-
     }
 
     //    Здесь устанавливаем время уведомления. Уведомление настраивается в MyAlarmReceiver

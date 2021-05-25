@@ -28,6 +28,8 @@
     <string name="No">Нет</string>
     <string name="enterShopList">Пожалуйста, напишите список покупок</string>
     <string name="Update_shopping_list">Обновить список покупок</string>
+    <string name="delete">Удалить</string>
+    <string name="deleted">Удалено</string>
 
 
 

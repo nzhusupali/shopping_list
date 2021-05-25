@@ -66,13 +66,19 @@ class ShopListAdapter(
                 }
 
                 val productsListUpdate =
-                    ShopList(shops.id,products, ratingBar.rating.toInt())
+                    ShopList(shops.id, products, ratingBar.rating.toInt())
 
                 dbProducts.child(shops.id).setValue(productsListUpdate)
                 Toast.makeText(mCtx, R.string.updated, Toast.LENGTH_SHORT).show()
             }
         })
-        builder.setNegativeButton(R.string.No) { _, _ -> Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP    }
+        builder.setNegativeButton(R.string.No) { _, _ -> Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP }
+        builder.setNeutralButton(R.string.delete) { _, _ ->
+            val dbProducts = FirebaseDatabase.getInstance().getReference("Shop list")
+            dbProducts.child(shops.id).removeValue()
+            Toast.makeText(mCtx, R.string.deleted, Toast.LENGTH_SHORT).show()
+
+        }
 
         val alert = builder.create()
         alert.show()
