@@ -49,8 +49,8 @@ class MyAlarmReceiver : BroadcastReceiver() {
                     channelId
                 )
                     .setSmallIcon(R.drawable.shopping96)
-                    .setContentTitle("Shopping List")
-                    .setContentText("Не забудьте посмотреть список продуктов на сегодня")
+                    .setContentTitle(context?.getString(R.string.app_name))
+                    .setContentText(context?.getString(R.string.doNotForget))
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
             Notification.DEFAULT_ALL
@@ -64,5 +64,9 @@ class MyAlarmReceiver : BroadcastReceiver() {
 
     override fun equals(other: Any?): Boolean {
         return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        return javaClass.hashCode()
     }
 }

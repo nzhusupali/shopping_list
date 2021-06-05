@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Shopping list</string>
+    <string name="app_name">Список покупок</string>
 
     <!--    Login activity  -->
     <string name="login">Логин</string>
@@ -20,7 +20,7 @@
     <string name="updated">Список обновлён</string>
     //kotlin
     <string name="succss_saved">Список покупок успешно сохранен</string>
-    <string name="dontForget">Не забудьте посмотреть список продуктов на сегодня</string>
+    <string name="doNotForget">Не забудьте посмотреть список продуктов на сегодня</string>
 
 
     <!--    Adapter     -->
@@ -30,7 +30,9 @@
     <string name="Update_shopping_list">Обновить список покупок</string>
     <string name="delete">Удалить</string>
     <string name="deleted">Удалено</string>
-
+    <string name="congratulations">Примите поздравления с покупкой от Нурислама</string>
+    <string name="Bought">Куплено</string>
+    <string name="DidntBuy">Не куплено</string>
 
 
 </resources>

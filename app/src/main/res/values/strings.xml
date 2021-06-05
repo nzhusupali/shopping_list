@@ -19,7 +19,7 @@
     <string name="updated">Updated</string>
     //kotlin
     <string name="succss_saved">Shopping list saved successfully</string>
-    <string name="dontForget">Dont forget to check the list of products for today</string>
+    <string name="doNotForget">Do not forget to check the list of products for today</string>
 
 
 
@@ -29,5 +29,8 @@
     <string name="Update_shopping_list">Update Shopping list</string>
     <string name="delete">delete</string>
     <string name="deleted">Deleted</string>
+    <string name="congratulations">Congratulations on your purchase from Nurislam</string>
+    <string name="Bought">Bought</string>
+    <string name="DidntBuy">Didn t buy</string>
 
 </resources>

@@ -3,26 +3,22 @@ package nzhusupali.project.shoppinglist
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.tomlonghurst.expandablehinttext.ExpandableHintText
 import nzhusupali.project.shoppinglist.databinding.ActivityMainBinding
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityMainBinding
-    private lateinit var ET_ShopList: EditText
+    private lateinit var etShopList: ExpandableHintText
     private lateinit var ratingBar: RatingBar
     private lateinit var buttonSend: Button
     private lateinit var listView: ListView
-    private val CHANNEL_ID_ANDROID = "test"
-    private val CHANNEL_NAME = "test 2"
-
+    private lateinit var button : Button
 
     private lateinit var shoppingList: MutableList<ShopList>
     private lateinit var ref: DatabaseReference
@@ -34,11 +30,10 @@ class MainActivity : AppCompatActivity() {
         scheduleAlarm()
         scheduleAlarm2()
 
-
         shoppingList = mutableListOf()
         ref = FirebaseDatabase.getInstance().getReference("Shop list")
 
-        ET_ShopList = _binding.ETShoppingList
+        etShopList = _binding.ETShoppingList
         ratingBar = _binding.ratingBar
         buttonSend = _binding.BTNSend
         listView = _binding.listView
@@ -47,8 +42,7 @@ class MainActivity : AppCompatActivity() {
             shopListSend()
         }
         ref.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-            }
+            override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -64,6 +58,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+
     }
 
     //    Здесь устанавливаем время уведомления. Уведомление настраивается в MyAlarmReceiver
@@ -88,31 +84,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun scheduleAlarm2() {
         val id = 2
-        val intentAlarm = Intent(this,MyAlarmReceiver::class.java)
-        val alarmManager : AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intentAlarm = Intent(this, MyAlarmReceiver::class.java)
+        val alarmManager: AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
-        calendar.set(Calendar.HOUR_OF_DAY,18)
+        calendar.set(Calendar.HOUR_OF_DAY, 18)
         calendar.set(Calendar.MINUTE, 0)
 
         alarmManager.set(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
-            PendingIntent.getBroadcast(this,id,intentAlarm,PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getBroadcast(this, id, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT)
         )
     }
 
     private fun shopListSend() {
-        val list = ET_ShopList.text.toString().trim()
-        if (list.isEmpty()) {
-            ET_ShopList.error = getString(R.string.writeShopList)
-            return
-        }
+        val list = etShopList.text.toString().trim()
 
         val shopId = ref.push().key
 
-        val shops = shopId?.let { ShopList(it, list, ratingBar.rating.toInt()) }
+        val shops = shopId?.let { ShopList(it, list, ratingBar.rating.toInt(), " " ) }
         shopId?.let {
             ref.child(it).setValue(shops).addOnCompleteListener {
                 Toast.makeText(this, getString(R.string.succss_saved), Toast.LENGTH_LONG).show()
